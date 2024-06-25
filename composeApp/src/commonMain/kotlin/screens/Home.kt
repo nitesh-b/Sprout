@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 
 import androidx.compose.runtime.Composable
@@ -28,7 +30,7 @@ import components.TextType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import screens.utils.customTypoGraphy
+import utils.customTypoGraphy
 
 @Composable
 @Preview
@@ -46,7 +48,11 @@ fun Home() {
             }
 
             Column(
-                modifier = Modifier.fillMaxWidth().weight(0.67f).padding(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.67f)
+                    .padding(12.dp)
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(text = stringResource(Res.string.fun_fact), preset = TextType.SUBTITLE1)
@@ -58,7 +64,7 @@ fun Home() {
                         Image(
                             painter = painterResource(Res.drawable.image_fun_fact),
                             contentDescription = "",
-                            contentScale = ContentScale.Fit,
+                            contentScale = ContentScale.FillWidth,
                             modifier = Modifier.fillMaxSize()
                                 .clip(shape = RoundedCornerShape(12.dp))
                         )
@@ -79,13 +85,45 @@ fun Home() {
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth()
-                        .background(color = Color.LightGray,
-                            shape = RoundedCornerShape(12.dp))
+                        .background(
+                            color = Color.LightGray,
+                            shape = RoundedCornerShape(12.dp)
+                        )
                         .padding(12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = "National day", preset = TextType.H6)
                     Text(text = "International Fairy Day!", preset = TextType.H4)
+                }
+                Column {
+                    Text(text = "Daily Quiz", preset = TextType.H6)
+                    Row {
+                        Box(modifier = Modifier.size(40.dp))
+                        Column {
+                            Text(text = "Fun Facts title")
+                            Text(text = "Fun Facts description")
+                        }
+                    }
+                }
+                Column {
+                    Text(text = "Daily Quiz", preset = TextType.H6)
+                    Row {
+                        Box(modifier = Modifier.size(40.dp))
+                        Column {
+                            Text(text = "Fun Facts title")
+                            Text(text = "Fun Facts description")
+                        }
+                    }
+                }
+                Column {
+                    Text(text = "Daily Quiz", preset = TextType.H6)
+                    Row {
+                        Box(modifier = Modifier.size(40.dp))
+                        Column {
+                            Text(text = "Fun Facts title")
+                            Text(text = "Fun Facts description")
+                        }
+                    }
                 }
                 Column {
                     Text(text = "Daily Quiz", preset = TextType.H6)

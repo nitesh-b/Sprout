@@ -1,6 +1,7 @@
-
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 
 plugins {
@@ -8,9 +9,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-
-
+    alias(libs.plugins.cocoapods)
 }
+
 
 kotlin {
     androidTarget {
@@ -19,20 +20,58 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        summary = "Compose application framework"
+        homepage = "https://github.com/JetBrains/compose-jb"
+        source = "https://github.com/CocoaPods/Specs.git"
+        version = "1.0.0"
+
+        framework {
+            baseName = "composeApp"
+            isStatic = false
+            source = "https://github.com/CocoaPods/Specs.git"
+            export(project(":composeApp"))
+            // Bitcode embedding
+            embedBitcode(BitcodeEmbeddingMode.BITCODE)
         }
+        ios.deploymentTarget = "14.5"
+
+
+
+
+//      Example of usage remote Cocoapods dependency from Cocoapods repository
+        pod("Base64") {
+            version = "~> 1.1.2"
+        }
+
+//      Example of usage remote Pod from Github repository by tag
+        pod("SDWebImage") {
+            source = git("https://github.com/SDWebImage/SDWebImage.git") {
+                tag = "5.9.2"
+            }
+        }
+        pod ("lottie-ios"){
+            source = git("https://github.com/airbnb/lottie-ios.git") {
+                tag = "4.4.0"
+            }
+        }
+        // Maps custom Xcode configuration to NativeBuildType
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
+
+
     }
-    
+
+
+
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -44,6 +83,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
         }
 
     }
