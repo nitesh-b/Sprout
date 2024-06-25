@@ -4,10 +4,10 @@ PODS:
     - Base64 (~> 1.1.2)
     - lottie-ios
     - SDWebImage
-  - lottie-ios (4.4.3)
-  - SDWebImage (5.19.2):
-    - SDWebImage/Core (= 5.19.2)
-  - SDWebImage/Core (5.19.2)
+  - lottie-ios (4.4.1)
+  - SDWebImage (5.19.0):
+    - SDWebImage/Core (= 5.19.0)
+  - SDWebImage/Core (5.19.0)
 
 DEPENDENCIES:
   - composeApp (from `../composeApp`)
@@ -25,8 +25,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   composeApp: e0c7c63c2faf9dd454f2ca9be3c23d648823db9b
-  lottie-ios: fcb5e73e17ba4c983140b7d21095c834b3087418
-  SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
+  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
+  SDWebImage: 981fd7e860af070920f249fd092420006014c3eb
 
 PODFILE CHECKSUM: d3ce95ecad7fb7b4327ddf0ea91713c29e6972de
 

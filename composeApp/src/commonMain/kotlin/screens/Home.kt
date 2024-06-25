@@ -2,6 +2,7 @@ package screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +14,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import au.com.redmonk.resources.Res
 import au.com.redmonk.resources.fun_fact
 import au.com.redmonk.resources.image_fun_fact
+import components.RadioGroup
 import components.Text
 import components.TextType
 import org.jetbrains.compose.resources.painterResource
@@ -35,8 +40,10 @@ import utils.customTypoGraphy
 @Composable
 @Preview
 fun Home() {
-
+    val quizOptions = listOf("Charles Babbage", "Issac Newton", "Jensen Ankles", "Lady Anna")
+    val (selected, setSelected) = remember { mutableStateOf("") }
     MaterialTheme(typography = customTypoGraphy()) {
+
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -95,46 +102,35 @@ fun Home() {
                     Text(text = "National day", preset = TextType.H6)
                     Text(text = "International Fairy Day!", preset = TextType.H4)
                 }
-                Column {
-                    Text(text = "Daily Quiz", preset = TextType.H6)
-                    Row {
-                        Box(modifier = Modifier.size(40.dp))
-                        Column {
-                            Text(text = "Fun Facts title")
-                            Text(text = "Fun Facts description")
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .background(Color.Yellow, shape = RoundedCornerShape(12.dp))
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "Daily Quiz", preset = TextType.H4)
+
+                    Column {
+                        Text(text = "Who is the father of computer?")
+                        RadioGroup(
+                            mItems = quizOptions,
+                            selected = selected,
+                            setSelected = setSelected
+                        )
+                        Button(onClick =  {
+                       println("Home: clicked")
+                    }){
+                            Text(text = "Submit", preset = TextType.SUBTITLE1)
                         }
                     }
+
                 }
-                Column {
-                    Text(text = "Daily Quiz", preset = TextType.H6)
-                    Row {
-                        Box(modifier = Modifier.size(40.dp))
-                        Column {
-                            Text(text = "Fun Facts title")
-                            Text(text = "Fun Facts description")
-                        }
-                    }
-                }
-                Column {
-                    Text(text = "Daily Quiz", preset = TextType.H6)
-                    Row {
-                        Box(modifier = Modifier.size(40.dp))
-                        Column {
-                            Text(text = "Fun Facts title")
-                            Text(text = "Fun Facts description")
-                        }
-                    }
-                }
-                Column {
-                    Text(text = "Daily Quiz", preset = TextType.H6)
-                    Row {
-                        Box(modifier = Modifier.size(40.dp))
-                        Column {
-                            Text(text = "Fun Facts title")
-                            Text(text = "Fun Facts description")
-                        }
-                    }
-                }
+
 
             }
 

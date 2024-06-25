@@ -44,22 +44,6 @@ kotlin {
 
 
 
-//      Example of usage remote Cocoapods dependency from Cocoapods repository
-        pod("Base64") {
-            version = "~> 1.1.2"
-        }
-
-//      Example of usage remote Pod from Github repository by tag
-        pod("SDWebImage") {
-            source = git("https://github.com/SDWebImage/SDWebImage.git") {
-                tag = "5.9.2"
-            }
-        }
-        pod ("lottie-ios"){
-            source = git("https://github.com/airbnb/lottie-ios.git") {
-                tag = "4.4.0"
-            }
-        }
         // Maps custom Xcode configuration to NativeBuildType
         xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
