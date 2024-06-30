@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.cocoapods)
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 
@@ -41,9 +43,6 @@ kotlin {
         }
         ios.deploymentTarget = "14.5"
 
-
-
-
         // Maps custom Xcode configuration to NativeBuildType
         xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
@@ -60,6 +59,10 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -67,6 +70,16 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+           implementation(libs.navigation.controller)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.kamel.image)
+            implementation(libs.ktor.client.core)
+            implementation(libs.compottie)
+            implementation(libs.compottie.dot)
+            implementation(libs.compottie.network)
+            implementation(libs.compottie.resources)
+
 
         }
 
@@ -106,9 +119,12 @@ android {
         compose = true
     }
     dependencies {
+        implementation(libs.ktor.client.okhttp)
         debugImplementation(compose.uiTooling)
     }
 }
+
+
 
 compose.resources {
     publicResClass = true

@@ -1,8 +1,10 @@
 package screens
 
+import Routes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +20,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,32 +31,63 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import au.com.redmonk.resources.Res
 import au.com.redmonk.resources.fun_fact
 import au.com.redmonk.resources.image_fun_fact
 import components.RadioGroup
 import components.Text
 import components.TextType
+import io.github.alexzhirkevich.compottie.Compottie
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import models.Fact
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import utils.customTypoGraphy
+import viewmodels.FactViewModel
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
-fun Home() {
+fun Home(navigationController: NavHostController) {
+    val lottieComposition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes("files/day.json").decodeToString()
+        )
+    }
     val quizOptions = listOf("Charles Babbage", "Issac Newton", "Jensen Ankles", "Lady Anna")
     val (selected, setSelected) = remember { mutableStateOf("") }
+    val viewModel: FactViewModel = viewModel { FactViewModel() }
+
+    LaunchedEffect(Unit) {
+        viewModel.getFact()
+    }
     MaterialTheme(typography = customTypoGraphy()) {
-
-
+        val factState by viewModel.data.collectAsState()
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .background(Color.Transparent),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Box(modifier = Modifier.fillMaxWidth().weight(0.33f).background(color = Color.Red)) {
+                Image(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth,
+                    painter = rememberLottiePainter(
+                        composition = lottieComposition,
+                        iterations = Compottie.IterateForever,
 
+                        ),
+                    contentDescription = null
+                )
             }
 
             Column(
@@ -76,10 +112,21 @@ fun Home() {
                                 .clip(shape = RoundedCornerShape(12.dp))
                         )
                     }
-                    Column {
-                        Text(text = "When was the first website launched?", preset = TextType.H6)
+                    Column(
+                        modifier = Modifier
+                            .clickable(enabled = true,
+                                onClick = {
+
+                                    navigationController.currentBackStackEntry?.savedStateHandle?.set(
+                                        Routes.FactDetail.route,
+                                        Json.encodeToString(factState)
+                                    )
+                                    navigationController.navigate(Routes.FactDetail.route)
+                                })
+                    ) {
+                        Text(text = factState.title, preset = TextType.H6)
                         Text(
-                            text = "The link is a snapshot of the CERN site, the first website, as of November 1992. The Web was publicly announced (via a posting to the Usenet newsgroup alt.hypertext) on August 6, 1991. Originally Tim Berners-Lee's web catalog at CERN.",
+                            text = factState.description,
                             maxLines = 2
                         )
                     }
@@ -122,9 +169,9 @@ fun Home() {
                             selected = selected,
                             setSelected = setSelected
                         )
-                        Button(onClick =  {
-                       println("Home: clicked")
-                    }){
+                        Button(onClick = {
+                            println("Home: clicked")
+                        }) {
                             Text(text = "Submit", preset = TextType.SUBTITLE1)
                         }
                     }
