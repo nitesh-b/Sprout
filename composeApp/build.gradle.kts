@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 
 plugins {
@@ -9,7 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.cocoapods)
+    //alias(libs.plugins.cocoapods)
     alias(libs.plugins.kotlin.serialization)
 
 }
@@ -23,32 +21,36 @@ kotlin {
         }
     }
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
 
-    cocoapods {
-        summary = "Compose application framework"
-        homepage = "https://github.com/JetBrains/compose-jb"
-        source = "https://github.com/CocoaPods/Specs.git"
-        version = "1.0.0"
-
-        framework {
-            baseName = "composeApp"
-            isStatic = false
-            source = "https://github.com/CocoaPods/Specs.git"
-            export(project(":composeApp"))
-            // Bitcode embedding
-            embedBitcode(BitcodeEmbeddingMode.BITCODE)
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
         }
-        ios.deploymentTarget = "14.5"
-
-        // Maps custom Xcode configuration to NativeBuildType
-        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
-
-
     }
+
+
+//    cocoapods {
+//        summary = "Compose application framework"
+//        homepage = "https://github.com/JetBrains/compose-jb"
+//        source = "https://github.com/CocoaPods/Specs.git"
+//        version = "1.0.0"
+//
+//        framework {
+//            baseName = "composeApp"
+//            isStatic = false
+//            source = "https://github.com/CocoaPods/Specs.git"
+//            export(project(":composeApp"))
+//            // Bitcode embedding
+//            embedBitcode(BitcodeEmbeddingMode.BITCODE)
+//        }
+//        ios.deploymentTarget = "14.0"
+//
+//    }
 
 
 
