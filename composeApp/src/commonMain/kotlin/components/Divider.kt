@@ -13,9 +13,9 @@ import androidx.compose.ui.unit.dp
 import utils.gradient_green_beach
 
 @Composable
-fun Divider(height: Dp = 4.dp, horizontal: Dp = 32.dp, vertical: Dp = 12.dp) {
+fun Divider(height: Dp = 2.dp, horizontal: Dp = 32.dp, vertical: Dp = 12.dp) {
     Spacer(
-        modifier = Modifier.fillMaxWidth(0.9f).height(height)
+        modifier = Modifier.fillMaxWidth().height(height)
             .background(gradient_green_beach, shape = RoundedCornerShape((height)))
             .padding(horizontal = horizontal, vertical = vertical)
     )

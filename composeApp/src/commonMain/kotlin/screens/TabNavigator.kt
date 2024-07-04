@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,7 +24,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import components.Text
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import utils.gradient_background
+import utils.gradient_bnw
 import utils.gradient_green_beach
+import utils.gradient_kashmir
 
 
 data class NavigationItem(val route: String, val label: String, val icon: ImageVector)
@@ -70,7 +74,7 @@ val tabNavController: NavHostController = rememberNavController()
         NavHost(
             tabNavController,
             startDestination = Routes.Home.route,
-            Modifier.padding(innerPadding).background(gradient_green_beach)
+            Modifier.padding(innerPadding).background(gradient_background)
         ) {
             composable(Routes.Home.route) { Home(tabNavController) }
             composable(Routes.Profile.route) { Profile(rootNavController, tabNavController) }

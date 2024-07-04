@@ -140,36 +140,10 @@ fun Home(tabNavController: NavHostController) {
                 Text(
                     text = "Discover",
                     preset = TextType.H3,
-                    modifier = Modifier.align(Alignment.Start)
+                    modifier = Modifier.align(Alignment.Start),
+                    color = Color.White
                 )
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                        .background(Color.Yellow, shape = RoundedCornerShape(12.dp))
-                        .border(
-                            width = 2.dp,
-                            color = Color.Black,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .padding(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "Daily Quiz", preset = TextType.H4)
 
-                    Column {
-                        Text(text = "Who is the father of computer?")
-                        RadioGroup(
-                            mItems = quizOptions,
-                            selected = selected,
-                            setSelected = setSelected
-                        )
-                        Button(onClick = {
-                            println("Home: clicked")
-                        }) {
-                            Text(text = "Submit", preset = TextType.SUBTITLE1)
-                        }
-                    }
-
-                }
             }
         }
     }
