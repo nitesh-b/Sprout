@@ -8,13 +8,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import models.Fact
 import models.HomeModel
+import models.NationalDayModel
 import models.WordOfDayModel
 
 class FactViewModel : ViewModel() {
     private val _data = MutableStateFlow<HomeModel>(
         HomeModel(
             fact = Fact("", "", ""),
-            wod = WordOfDayModel()
+            wod = WordOfDayModel(),
+            nationalDay = NationalDayModel()
         )
     )
     val data: StateFlow<HomeModel> = _data

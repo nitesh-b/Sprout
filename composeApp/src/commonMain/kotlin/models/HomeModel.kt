@@ -3,7 +3,11 @@ package models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HomeModel(val fact: Fact, val wod: WordOfDayModel)
+data class HomeModel(
+    val fact: Fact,
+    val wod: WordOfDayModel,
+    val nationalDay: NationalDayModel,
+)
 
 
 @Serializable
@@ -13,5 +17,15 @@ data class WordOfDayModel(
     val meaning: String = "",
     val exampleSentence: String = "",
 )
+
+@Serializable
+data class NationalDayModel(
+    val id: String = "",
+    val title: String = "",
+    val description: String = "",
+    val imageUrl: String = "",
+    val dateTS: String = "",
+)
+
 
 

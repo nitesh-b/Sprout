@@ -24,7 +24,6 @@ import androidx.navigation.compose.rememberNavController
 import components.Text
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import utils.gradient_green_beach
-import utils.gradient_kashmir
 
 
 data class NavigationItem(val route: String, val label: String, val icon: ImageVector)
@@ -73,7 +72,7 @@ val tabNavController: NavHostController = rememberNavController()
             startDestination = Routes.Home.route,
             Modifier.padding(innerPadding).background(gradient_green_beach)
         ) {
-            composable(Routes.Home.route) { Home(rootNavController, tabNavController) }
+            composable(Routes.Home.route) { Home(tabNavController) }
             composable(Routes.Profile.route) { Profile(rootNavController, tabNavController) }
         }
     }

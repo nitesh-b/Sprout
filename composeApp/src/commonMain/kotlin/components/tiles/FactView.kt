@@ -2,9 +2,7 @@ package components.tiles
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,16 +15,15 @@ import components.Text
 import components.TextType
 import models.Fact
 import utils.customFontFamily
-import utils.customTypoGraphy
 import utils.gradient_bnw
 
 @Composable
-fun FactView(fact: Fact) {
-    Column(modifier = Modifier.fillMaxWidth().background(gradient_bnw).padding(12.dp)) {
+fun FactView(modifier: Modifier = Modifier, data: Fact) {
+    Column(modifier = modifier.background(gradient_bnw).padding(12.dp)) {
         Text(text = "Did you know?", preset = TextType.H1, color = Color.White)
         // Text(text = fact.title, preset = TextType.H3, color = Color.White)
         Text(
-            text = fact.description,
+            text = data.description,
             style = TextStyle.Default.copy(
                 fontFamily = customFontFamily(),
                 fontWeight = FontWeight.Medium,

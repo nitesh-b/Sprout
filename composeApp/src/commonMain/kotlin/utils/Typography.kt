@@ -56,9 +56,9 @@ fun customFontFamily() = FontFamily(
 fun customTypoGraphy() = Typography().run {
     val fontFamily = customFontFamily()
     copy(
-        h1 = h1.copy(fontFamily = fontFamily, fontSize = 38.sp, lineHeight = 80.sp, fontWeight = FontWeight.Bold),
-        h2 = h2.copy(fontFamily = fontFamily, fontSize = 28.sp, fontWeight = FontWeight.Bold),
-        h3 = h3.copy(fontFamily = fontFamily, fontSize = 24.sp, fontWeight = FontWeight.Bold),
+        h1 = h1.copy(fontFamily = fontFamily, fontSize = 36.sp, lineHeight = 80.sp, fontWeight = FontWeight.Bold),
+        h2 = h2.copy(fontFamily = fontFamily, fontSize = 28.sp,lineHeight = 48.sp, fontWeight = FontWeight.Bold),
+        h3 = h3.copy(fontFamily = fontFamily, fontSize = 24.sp,lineHeight = 32.sp, fontWeight = FontWeight.Bold),
         h4 = h4.copy(fontFamily = fontFamily, fontSize = 20.sp, fontWeight = FontWeight.Bold),
         h5 = h5.copy(fontFamily = fontFamily, fontSize = 18.sp, fontWeight = FontWeight.Bold),
         h6 = h6.copy(fontFamily = fontFamily, fontSize = 16.sp, fontWeight = FontWeight.Bold),
