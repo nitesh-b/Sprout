@@ -3,6 +3,7 @@ package datasource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import models.DiscoverModel
 import models.Fact
 import models.HomeModel
 import models.NationalDayModel
@@ -31,7 +32,7 @@ class DataSource {
         ),
         Fact(
             id = "4",
-            imageUrl  = "https://picsum.photos/800/450",
+            imageUrl = "https://picsum.photos/800/450",
             title = "Bananas",
             description = "Bananas are berries, but strawberries aren't."
         ),
@@ -43,11 +44,35 @@ class DataSource {
         )
     )
 
+    fun generateRandomDiscoverModel(): DiscoverModel {
+        val id = Random.nextInt(1000, 9999).toString()
+        val imageUrl = "https://picsum.photos/200/200"
+        val title = "Title ${Random.nextInt(1, 100)}"
+        val dateTS =
+            Random.nextLong(1609459200, 1672444800) // Random timestamp between 2021 and 2023
+        val address = "${Random.nextInt(1, 100)} Address st, City, NSW 2020"
+        return DiscoverModel(id, imageUrl, title, dateTS, address)
+    }
+
     suspend fun getHomeData(id: String? = null): HomeModel = withContext(Dispatchers.IO) {
         val fact = funFacts[Random.nextInt(0, 5)]
-        val wod = WordOfDayModel("expatriate", "\\ ɛksˈpeɪtrieɪt \\ noun", ": a person who is voluntarily absent from home or country", "" )
-       val nationalDay = NationalDayModel(title = "International Fairy Day", description = "Today is the national Fairy day. Lets celebrate this day with joy and wish everyone luck.", dateTS = "04 Aug, 2024", imageUrl = "")
-       return@withContext HomeModel(fact = fact, wod = wod, nationalDay)
+        val wod = WordOfDayModel(
+            "expatriate",
+            "\\ ɛksˈpeɪtrieɪt \\ noun",
+            ": a person who is voluntarily absent from home or country",
+            ""
+        )
+        val nationalDay = NationalDayModel(
+            title = "International Fairy Day",
+            description = "Today is the national Fairy day. Lets celebrate this day with joy and wish everyone luck.",
+            dateTS = "04 Aug, 2024",
+            imageUrl = ""
+        )
+        return@withContext HomeModel(
+            fact = fact,
+            wod = wod,
+            nationalDay = nationalDay,
+            discover = List(5) { generateRandomDiscoverModel() })
 
     }
 

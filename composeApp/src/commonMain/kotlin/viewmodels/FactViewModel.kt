@@ -16,7 +16,8 @@ class FactViewModel : ViewModel() {
         HomeModel(
             fact = Fact("", "", ""),
             wod = WordOfDayModel(),
-            nationalDay = NationalDayModel()
+            nationalDay = NationalDayModel(),
+            discover = listOf()
         )
     )
     val data: StateFlow<HomeModel> = _data

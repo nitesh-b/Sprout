@@ -7,8 +7,8 @@ data class HomeModel(
     val fact: Fact,
     val wod: WordOfDayModel,
     val nationalDay: NationalDayModel,
+    val discover: List<DiscoverModel>,
 )
-
 
 @Serializable
 data class WordOfDayModel(

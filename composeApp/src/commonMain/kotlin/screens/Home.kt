@@ -1,7 +1,6 @@
 package screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,10 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,9 +35,9 @@ import au.com.redmonk.resources.braniac_small
 import au.com.redmonk.resources.calendar
 import components.CardView
 import components.Divider
-import components.RadioGroup
 import components.Text
 import components.TextType
+import components.tiles.DiscoverTile
 import components.tiles.FactView
 import components.tiles.WordOfDayView
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -57,7 +56,6 @@ fun Home(tabNavController: NavHostController) {
 //            Res.readBytes("files/day.json").decodeToString()
 //        )
 //    }
-    val quizOptions = listOf("Charles Babbage", "Issac Newton", "Jensen Ankles", "Lady Anna")
     val (selected, setSelected) = remember { mutableStateOf("") }
     val viewModel: FactViewModel = viewModel { FactViewModel() }
 
@@ -143,7 +141,15 @@ fun Home(tabNavController: NavHostController) {
                     modifier = Modifier.align(Alignment.Start),
                     color = Color.White
                 )
-
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    flingBehavior = ScrollableDefaults.flingBehavior()
+                ) {
+                    items(factState.discover) {
+                        DiscoverTile(it)
+                    }
+                }
             }
         }
     }
