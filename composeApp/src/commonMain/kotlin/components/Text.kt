@@ -2,8 +2,11 @@ package components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import utils.customTypoGraphy
 
 
@@ -17,15 +20,18 @@ fun Text(
     modifier: Modifier = Modifier,
     text: String,
     preset: TextType = TextType.BODY1,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
+    color: Color = Color.Black,
+    style: TextStyle? = null
 ) {
 
     return androidx.compose.material.Text(
         maxLines = maxLines,
         modifier = modifier,
         text = text,
-        style = getTextStyle(preset),
-        overflow = TextOverflow.Ellipsis
+        color = color,
+        style = style ?: getTextStyle(preset),
+        overflow = TextOverflow.Ellipsis,
     )
 }
 

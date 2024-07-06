@@ -4,6 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import models.Fact
+import models.HomeModel
+import models.WordOfDayModel
 import kotlin.random.Random
 
 class DataSource {
@@ -40,8 +42,10 @@ class DataSource {
         )
     )
 
-    suspend fun getFact(id: String? = null): Fact = withContext(Dispatchers.IO) {
-        return@withContext funFacts[Random.nextInt(0, 5)]
+    suspend fun getHomeData(id: String? = null): HomeModel = withContext(Dispatchers.IO) {
+        val fact = funFacts[Random.nextInt(0, 5)]
+        val wod = WordOfDayModel("expatriate", "\\ ɛksˈpeɪtrieɪt \\ noun", ": a person who is voluntarily absent from home or country", "" )
+       return@withContext HomeModel(fact = fact, wod = wod)
 
     }
 

@@ -7,17 +7,24 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import models.Fact
+import models.HomeModel
+import models.WordOfDayModel
 
 class FactViewModel : ViewModel() {
-    private val _data = MutableStateFlow<Fact>(Fact())
-    val data: StateFlow<Fact> = _data
+    private val _data = MutableStateFlow<HomeModel>(
+        HomeModel(
+            fact = Fact("", "", ""),
+            wod = WordOfDayModel()
+        )
+    )
+    val data: StateFlow<HomeModel> = _data
 
     private val dataSource: DataSource = DataSource()
 
-    fun getFact(){
+    fun getHomeData() {
         viewModelScope.launch {
-            val fact = dataSource.getFact()
-            _data.value  = fact
+            val homeModel = dataSource.getHomeData()
+            _data.value = homeModel
         }
 
 

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import au.com.redmonk.resources.OpenSans_Bold
 import au.com.redmonk.resources.OpenSans_ExtraBold
@@ -55,7 +56,7 @@ fun customFontFamily() = FontFamily(
 fun customTypoGraphy() = Typography().run {
     val fontFamily = customFontFamily()
     copy(
-        h1 = h1.copy(fontFamily = fontFamily, fontSize = 32.sp, fontWeight = FontWeight.Bold),
+        h1 = h1.copy(fontFamily = fontFamily, fontSize = 38.sp, lineHeight = 80.sp, fontWeight = FontWeight.Bold),
         h2 = h2.copy(fontFamily = fontFamily, fontSize = 28.sp, fontWeight = FontWeight.Bold),
         h3 = h3.copy(fontFamily = fontFamily, fontSize = 24.sp, fontWeight = FontWeight.Bold),
         h4 = h4.copy(fontFamily = fontFamily, fontSize = 20.sp, fontWeight = FontWeight.Bold),
@@ -73,13 +74,13 @@ fun customTypoGraphy() = Typography().run {
         ),
         body1 = body1.copy(
             fontFamily = fontFamily,
-            fontSize = 14.sp,
+            fontSize = 16.sp,
             lineHeight = 16.sp,
             fontWeight = FontWeight.Medium
         ),
         body2 = body2.copy(
             fontFamily = fontFamily,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             lineHeight = 20.sp,
             fontWeight = FontWeight.Medium
         ),
