@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import au.com.redmonk.resources.OpenSans_Bold
 import au.com.redmonk.resources.OpenSans_ExtraBold
@@ -56,9 +55,24 @@ fun customFontFamily() = FontFamily(
 fun customTypoGraphy() = Typography().run {
     val fontFamily = customFontFamily()
     copy(
-        h1 = h1.copy(fontFamily = fontFamily, fontSize = 36.sp, lineHeight = 80.sp, fontWeight = FontWeight.Bold),
-        h2 = h2.copy(fontFamily = fontFamily, fontSize = 28.sp,lineHeight = 48.sp, fontWeight = FontWeight.Bold),
-        h3 = h3.copy(fontFamily = fontFamily, fontSize = 24.sp,lineHeight = 32.sp, fontWeight = FontWeight.Bold),
+        h1 = h1.copy(
+            fontFamily = fontFamily,
+            fontSize = 36.sp,
+            lineHeight = 80.sp,
+            fontWeight = FontWeight.Bold
+        ),
+        h2 = h2.copy(
+            fontFamily = fontFamily,
+            fontSize = 28.sp,
+            lineHeight = 48.sp,
+            fontWeight = FontWeight.Bold
+        ),
+        h3 = h3.copy(
+            fontFamily = fontFamily,
+            fontSize = 24.sp,
+            lineHeight = 32.sp,
+            fontWeight = FontWeight.Bold
+        ),
         h4 = h4.copy(fontFamily = fontFamily, fontSize = 20.sp, fontWeight = FontWeight.Bold),
         h5 = h5.copy(fontFamily = fontFamily, fontSize = 18.sp, fontWeight = FontWeight.Bold),
         h6 = h6.copy(fontFamily = fontFamily, fontSize = 16.sp, fontWeight = FontWeight.Bold),
@@ -69,12 +83,12 @@ fun customTypoGraphy() = Typography().run {
         ),
         subtitle2 = subtitle2.copy(
             fontFamily = fontFamily,
-            fontSize = 14.sp,
+            fontSize = 12.sp,
             fontWeight = FontWeight.Bold
         ),
         body1 = body1.copy(
             fontFamily = fontFamily,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             lineHeight = 16.sp,
             fontWeight = FontWeight.Medium
         ),
@@ -85,11 +99,11 @@ fun customTypoGraphy() = Typography().run {
             fontWeight = FontWeight.Medium
         ),
         button = button.copy(fontFamily = fontFamily),
-        caption = subtitle2.copy(
+        caption = caption.copy(
             fontFamily = fontFamily,
-            fontSize = 16.sp,
+            fontSize = 12.sp,
             fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Italic
+            fontStyle = FontStyle.Normal
         ),
         overline = overline.copy(fontFamily = fontFamily)
     )

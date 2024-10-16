@@ -76,4 +76,8 @@ class DataSource {
 
     }
 
+    suspend fun getFact() {
+
+    }
+
 }

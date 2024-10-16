@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -29,14 +28,15 @@ import utils.gradient_kashmir
 import utils.gradient_transparent
 
 @Composable
-fun CardView(modifier : Modifier = Modifier,
-             topIconPainter: DrawableResource? = null,
-             image: DrawableResource? = null,
-             backgroundGradient: Brush = gradient_transparent,
-             content: (@Composable ColumnScope.() -> Unit)? = null) {
+fun CardView(
+    modifier: Modifier = Modifier,
+    topIconPainter: DrawableResource? = null,
+    image: DrawableResource? = null,
+    backgroundGradient: Brush = gradient_transparent,
+    content: (@Composable ColumnScope.() -> Unit)? = null,
+) {
     val cornerRadius: Dp = 16.dp
     val shadowElevation: Dp = 1.dp
-    val gray200 = Color(0x20FFFFFF)
     Box(
         modifier = modifier
             .padding(4.dp)
@@ -59,17 +59,17 @@ fun CardView(modifier : Modifier = Modifier,
 
         ) {
             Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(backgroundGradient, shape = RoundedCornerShape(cornerRadius))
-                        .border(
-                            width = 1.dp,
-                            gradient_kashmir,
-                            shape = RoundedCornerShape(cornerRadius)
-                        )
-                        .clip(shape = RoundedCornerShape(cornerRadius))
-                    ){
-                if(image != null){
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(backgroundGradient, shape = RoundedCornerShape(cornerRadius))
+                    .border(
+                        width = 1.dp,
+                        gradient_kashmir,
+                        shape = RoundedCornerShape(cornerRadius)
+                    )
+                    .clip(shape = RoundedCornerShape(cornerRadius))
+            ) {
+                if (image != null) {
                     Image(
                         painter = painterResource(image),
                         contentDescription = "Overlapping Image",
@@ -78,9 +78,9 @@ fun CardView(modifier : Modifier = Modifier,
                         contentScale = ContentScale.FillWidth
                     )
                 }
-                    if (content != null) {
-                        content()
-                    }
+                if (content != null) {
+                    content()
+                }
             }
         }
         if (topIconPainter != null) {

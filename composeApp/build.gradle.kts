@@ -53,11 +53,10 @@ kotlin {
 //    }
 
 
-
-
     sourceSets {
 
         androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
@@ -72,7 +71,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-           implementation(libs.navigation.controller)
+            implementation(libs.navigation.controller)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kamel.image)
@@ -81,6 +80,13 @@ kotlin {
             implementation(libs.compottie.dot)
             implementation(libs.compottie.network)
             implementation(libs.compottie.resources)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.napier)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.napier)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
 
 
         }
@@ -124,6 +130,8 @@ android {
     dependencies {
         implementation(libs.ktor.client.okhttp)
         debugImplementation(compose.uiTooling)
+        implementation(libs.kotlinx.coroutines.android)
+
     }
 }
 

@@ -6,8 +6,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
 import utils.customTypoGraphy
 
 
@@ -24,7 +22,7 @@ fun Text(
     maxLines: Int = Int.MAX_VALUE,
     color: Color = Color.Black,
     textAlign: TextAlign = TextAlign.Start,
-    style: TextStyle? = null
+    style: TextStyle? = null,
 ) {
 
     return androidx.compose.material.Text(
@@ -32,7 +30,11 @@ fun Text(
         modifier = modifier,
         text = text,
         color = color,
-        style = style ?: getTextStyle(preset),
+        style = style ?: getTextStyle(preset).copy(
+            fontWeight = style?.fontWeight,
+            color = style?.color ?: color,
+            fontFamily = style?.fontFamily,
+        ),
         overflow = TextOverflow.Ellipsis,
         textAlign = textAlign
     )

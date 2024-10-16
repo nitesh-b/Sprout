@@ -1,10 +1,2 @@
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-
-interface Platform {
-    val name: String
-}
-
-expect fun getPlatform(): Platform
+expect fun isIOS(): Boolean
+expect fun isAndroid(): Boolean
