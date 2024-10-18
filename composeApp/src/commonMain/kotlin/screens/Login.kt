@@ -36,7 +36,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import au.com.redmonk.resources.Res
 import au.com.redmonk.resources.login_background
@@ -52,13 +51,11 @@ import viewmodels.AuthViewModel
 
 @Composable
 @Preview
-fun Login(rootNavController: NavHostController) {
+fun Login(rootNavController: NavHostController, viewModel: AuthViewModel) {
     val TAG = "Login"
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val localFocusManager = LocalFocusManager.current
-
-    val viewModel = viewModel { AuthViewModel() }
 
     val loginState by viewModel.data.collectAsState()
     LaunchedEffect(loginState) {
@@ -164,7 +161,7 @@ fun Login(rootNavController: NavHostController) {
                         disabledContentColor = Color.Gray
                     ),
                     onClick = {
-                        viewModel.loginUser(email = "abc@abc.com", password = password)
+                        rootNavController.navigate(Routes.SignUp.route)
                     }) {
                     Text(text = "SignUp")
                 }

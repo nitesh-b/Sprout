@@ -1,21 +1,17 @@
 package models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SignUp(
-    val password: String,
-    val retryPassword: String,
-    override val email: String,
-    override val firstName: String,
-    override val lastName: String,
-) : User()
-
-abstract class User(
     val id: String? = null,
-    open val email: String? = null,
-    open val firstName: String? = null,
-    open val lastName: String? = null,
-    val dob: String? = null,
-    val mobile: String? = null,
-    val sex: String? = null,
+    var password: String? = null,
+    var retryPassword: String? = null,
+    var email: String? = null,
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var dob: String? = null,
+    var mobile: String? = null,
+    var sex: String? = null,
+)
 
-
-    )

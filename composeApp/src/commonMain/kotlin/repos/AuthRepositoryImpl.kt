@@ -18,6 +18,6 @@ class AuthRepositoryImpl : AuthRepository {
     override suspend fun signUpUser(user: SignUp): ResponseModel<AuthResponse> {
         if (user.password != user.retryPassword)
             return ResponseModel.Error("Passwords do not match", 0)
-        return ResponseModel.Success(null)
+        return dataSource.signUpUser(user)
     }
 }

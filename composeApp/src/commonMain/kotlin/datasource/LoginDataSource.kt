@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 import models.AuthRequest
 import models.AuthResponse
 import models.ResponseModel
+import models.SignUp
 import networkService.NetworkService
 
 class LoginDataSource(private val networkService: NetworkService = NetworkService()) {
@@ -25,9 +26,13 @@ class LoginDataSource(private val networkService: NetworkService = NetworkServic
 
     }
 
-//    suspend fun signUpUser(user: User): ResponseModel<AuthResponse> {
-//        withContext(Dispatchers.IO) {
-//
-//        }
-//    }
+    suspend fun signUpUser(user: SignUp): ResponseModel<AuthResponse> {
+        return withContext(Dispatchers.IO) {
+            val response = networkService.post<SignUp, AuthResponse>(
+                endPoint = "auth/createuser",
+                requestBody = user
+            )
+            return@withContext response
+        }
+    }
 }
