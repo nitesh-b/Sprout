@@ -17,14 +17,14 @@ import utils.customFontFamily
 import utils.gradient_bnw
 
 @Composable
-fun FactView(modifier: Modifier = Modifier, data: Fact) {
+fun FactView(modifier: Modifier = Modifier, data: Fact?) {
     Column(
         modifier = modifier.background(gradient_bnw).padding(horizontal = 12.dp, vertical = 32.dp)
     ) {
         Text(text = "Did you know?", preset = TextType.H1, color = Color.White)
         // Text(text = fact.title, preset = TextType.H3, color = Color.White)
         Text(
-            text = data.description,
+            text = data?.description ?: "",
             style = TextStyle.Default.copy(
                 fontFamily = customFontFamily(),
                 fontWeight = FontWeight.Medium,

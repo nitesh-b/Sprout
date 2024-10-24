@@ -1,6 +1,5 @@
 package screens
 
-import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -19,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -38,43 +38,61 @@ import components.CardView
 import components.Divider
 import components.Text
 import components.TextType
-import components.tiles.DiscoverTile
 import components.tiles.FactView
 import components.tiles.ScoreCardTile
 import components.tiles.WordOfDayView
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import io.github.aakira.napier.Napier
+import models.HomeModel
+import models.ResponseModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import utils.customFontFamily
 import utils.customTypoGraphy
 import utils.gradient_kashmir
-import viewmodels.FactViewModel
+import viewmodels.HomeViewModel
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun Home(tabNavController: NavHostController) {
-    val viewModel: FactViewModel = viewModel { FactViewModel() }
-
+    val TAG = "Home"
+    val viewModel: HomeViewModel = viewModel { HomeViewModel() }
+    var home: HomeModel? by remember { mutableStateOf(null) }
     LaunchedEffect(Unit) {
         viewModel.getHomeData()
     }
 
+    val factState by viewModel.data.collectAsState()
+    LaunchedEffect(factState) {
+        when (factState) {
+            is ResponseModel.Error -> {
+                Napier.d(tag = TAG, message = "Failed to Load Home")
+            }
+
+            ResponseModel.Loading -> Napier.d(tag = TAG, message = "Loading")
+            ResponseModel.Ready -> {}
+            is ResponseModel.Success -> {
+                home = (factState as ResponseModel.Success).data
+
+            }
+        }
+    }
+
+
     MaterialTheme(typography = customTypoGraphy()) {
-        val factState by viewModel.data.collectAsState()
+
         Column(
             modifier = Modifier.fillMaxSize()
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            FactView(modifier = Modifier.fillMaxWidth(), data = factState.fact)
+            FactView(modifier = Modifier.fillMaxWidth(), data = home?.fact)
             Column(
                 Modifier.fillMaxSize().padding(12.dp).padding(top = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
 
                 ) {
-                WordOfDayView(data = factState.wod)
+                WordOfDayView(data = home?.dictionary)
                 Divider()
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Column(
@@ -97,7 +115,7 @@ fun Home(tabNavController: NavHostController) {
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = factState.nationalDay.title,
+                            text = home?.nationalDay?.title ?: "Dummy Title",
                             preset = TextType.H4,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.weight(1f).padding(12.dp)
@@ -165,16 +183,16 @@ fun Home(tabNavController: NavHostController) {
                     modifier = Modifier.align(Alignment.Start),
                     color = Color.White
                 )
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-
-                    flingBehavior = ScrollableDefaults.flingBehavior()
-                ) {
-                    items(factState.discover) {
-                        DiscoverTile(it)
-                    }
-                }
+//                LazyRow(
+//                    modifier = Modifier
+//                        .fillMaxWidth(),
+//
+//                    flingBehavior = ScrollableDefaults.flingBehavior()
+//                ) {
+//                    items(factState.discover) {
+//                        DiscoverTile(it)
+//                    }
+//                }
                 Divider()
 
             }

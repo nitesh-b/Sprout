@@ -9,6 +9,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
@@ -16,6 +17,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
+import io.ktor.http.headers
 import io.ktor.http.parameters
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
@@ -24,6 +26,7 @@ import models.ResponseModel
 
 
 class NetworkService {
+
     val client = HttpClient {
         expectSuccess = true
         install(Logging) {
@@ -35,6 +38,14 @@ class NetworkService {
             level = LogLevel.BODY
         }.also {
             Napier.base(DebugAntilog())
+        }
+        install(Logging) {
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Napier.v(tag = "HTTP Client HEADER", message = message)
+                }
+            }
+            level = LogLevel.HEADERS
         }
         install(ContentNegotiation) {
             json(
@@ -48,13 +59,18 @@ class NetworkService {
 
     }
 
+
     val baseUrl = "10.0.2.2:8080"
     val protocol = URLProtocol.HTTP
+
+    fun getAccessToken(): String? {
+        return TokenManager.getAccessToken()
+    }
 
 
     suspend inline fun <reified T> get(
         endPoint: String,
-        queryParams: Map<String, String>?,
+        queryParams: Map<String, String>? = null,
     ): ResponseModel<T> {
         val response: HttpResponse = client.get {
             url {
@@ -66,6 +82,7 @@ class NetworkService {
                         append(key, value)
                     }
                 }
+                header("Authorization", "Bearer ${getAccessToken()}")
             }
         }
         if (response.status == HttpStatusCode.OK) {
@@ -87,6 +104,11 @@ class NetworkService {
                 host = baseUrl
                 path(endPoint)
                 setBody(requestBody)
+                getAccessToken()?.let {
+                    headers {
+                        append("Authorization", "Bearer $it")
+                    }
+                }
             }
             contentType(ContentType.Application.Json)
         }

@@ -1,13 +1,7 @@
 package datasource
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.withContext
 import models.DiscoverModel
 import models.Fact
-import models.HomeModel
-import models.NationalDayModel
-import models.WordOfDayModel
 import kotlin.random.Random
 
 class DataSource {
@@ -54,30 +48,5 @@ class DataSource {
         return DiscoverModel(id, imageUrl, title, dateTS, address)
     }
 
-    suspend fun getHomeData(id: String? = null): HomeModel = withContext(Dispatchers.IO) {
-        val fact = funFacts[Random.nextInt(0, 5)]
-        val wod = WordOfDayModel(
-            "expatriate",
-            "\\ ɛksˈpeɪtrieɪt \\ noun",
-            ": a person who is voluntarily absent from home or country",
-            ""
-        )
-        val nationalDay = NationalDayModel(
-            title = "International Fairy Day",
-            description = "Today is the national Fairy day. Lets celebrate this day with joy and wish everyone luck.",
-            dateTS = "04 Aug, 2024",
-            imageUrl = ""
-        )
-        return@withContext HomeModel(
-            fact = fact,
-            wod = wod,
-            nationalDay = nationalDay,
-            discover = List(5) { generateRandomDiscoverModel() })
-
-    }
-
-    suspend fun getFact() {
-
-    }
 
 }

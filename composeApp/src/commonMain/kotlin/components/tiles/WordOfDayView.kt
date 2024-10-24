@@ -17,7 +17,7 @@ import utils.gradient_kashmir
 
 
 @Composable
-fun WordOfDayView(modifier : Modifier =  Modifier, data: WordOfDayModel) {
+fun WordOfDayView(modifier: Modifier = Modifier, data: WordOfDayModel?) {
     CardView(
         modifier = modifier.fillMaxWidth(),
         topIconPainter = Res.drawable.wod,
@@ -28,9 +28,9 @@ fun WordOfDayView(modifier : Modifier =  Modifier, data: WordOfDayModel) {
                 .fillMaxWidth()
                 .padding(vertical = 16.dp, horizontal = 12.dp)
         ) {
-            Text(text = data.word, preset = TextType.H4, color = Color.White)
-            Text(text = data.phonetics, preset = TextType.BODY1, color = Color.White)
-            Text(text = data.meaning, preset = TextType.BODY2, color = Color.White)
+            Text(text = data?.word ?: "", preset = TextType.H4, color = Color.White)
+            Text(text = data?.pronunciation ?: "", preset = TextType.BODY1, color = Color.White)
+            Text(text = data?.meaning ?: "", preset = TextType.BODY2, color = Color.White)
         }
     }
 

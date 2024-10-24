@@ -1,5 +1,6 @@
 package repos
 
+import com.russhwolf.settings.Settings
 import datasource.LoginDataSource
 import models.AuthResponse
 import models.ResponseModel
@@ -7,6 +8,7 @@ import models.SignUp
 
 class AuthRepositoryImpl : AuthRepository {
     private val dataSource = LoginDataSource()
+    private val settings = Settings()
     override suspend fun loginUser(email: String, password: String): ResponseModel<AuthResponse> {
         return dataSource.loginUser(email, password)
     }

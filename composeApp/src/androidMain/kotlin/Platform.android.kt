@@ -5,3 +5,4 @@ actual fun isIOS(): Boolean {
 actual fun isAndroid(): Boolean {
     return true
 }
+

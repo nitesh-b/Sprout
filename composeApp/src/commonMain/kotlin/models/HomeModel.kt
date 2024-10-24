@@ -5,17 +5,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class HomeModel(
     val fact: Fact,
-    val wod: WordOfDayModel,
-    val nationalDay: NationalDayModel,
-    val discover: List<DiscoverModel>,
+    val dictionary: WordOfDayModel,
+    val nationalDay: NationalDayModel? = null,
+    val discover: List<DiscoverModel>? = null,
 )
 
 @Serializable
 data class WordOfDayModel(
     val word: String = "",
-    val phonetics: String = "",
+    val pronunciation: String = "",
     val meaning: String = "",
-    val exampleSentence: String = "",
+    val example: String = "",
+    val id: String,
 )
 
 @Serializable

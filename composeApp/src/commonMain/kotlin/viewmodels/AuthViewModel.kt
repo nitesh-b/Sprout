@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import models.AuthResponse
 import models.ResponseModel
 import models.SignUp
+import networkService.TokenManager
 import repos.AuthRepositoryImpl
 
 class AuthViewModel : ViewModel() {
@@ -22,6 +23,11 @@ class AuthViewModel : ViewModel() {
         viewModelScope.launch {
             val response = repository.loginUser(email, password)
             _data.value = response
+            if (response is ResponseModel.Success<AuthResponse>) {
+                response.data?.let {
+                    TokenManager.setToken(it)
+                }
+            }
         }
 
 
@@ -32,6 +38,11 @@ class AuthViewModel : ViewModel() {
         viewModelScope.launch {
             val response = repository.signUpUser(user)
             _data.value = response
+            if (response is ResponseModel.Success<AuthResponse>) {
+                response.data?.let {
+                    TokenManager.setToken(it)
+                }
+            }
         }
 
 
