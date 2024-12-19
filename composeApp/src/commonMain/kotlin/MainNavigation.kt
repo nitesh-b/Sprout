@@ -5,8 +5,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import screens.ChildAutismDetail
+import screens.ChildInfoScreen
 import screens.FunFactDetail
-import screens.Login
+import screens.Home
 import screens.SignUp
 import screens.TabNavigator
 import utils.gradient_background
@@ -19,15 +21,22 @@ fun MainNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.Login.route,
+        startDestination = Routes.Home.route,
         modifier = Modifier.background(gradient_background)
     ) {
-        composable(Routes.Login.route) {
-            Login(navController, authViewModel)
+        composable(Routes.ChildInfo.route) {
+            ChildInfoScreen(navController, authViewModel)
+        }
+        composable(Routes.ChildAutismDetail.route) {
+            ChildAutismDetail(navController, authViewModel)
         }
         composable(Routes.SignUp.route) {
             SignUp(navController, authViewModel)
         }
+        composable(Routes.Home.route) {
+            Home(navController)
+        }
+
         composable(Routes.TabNav.route) {
             TabNavigator(navController)
         }
