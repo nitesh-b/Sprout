@@ -220,7 +220,7 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
         ) {
             // "Next" Button
             Button(
-                onClick = { rootNavController.navigate(Routes.ChildAutismDetail.route) },
+                onClick = { rootNavController.navigate(Routes.Home.route) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = primary),
                 shape = CircleShape,
                 modifier = Modifier.size(60.dp).align(Alignment.Center)

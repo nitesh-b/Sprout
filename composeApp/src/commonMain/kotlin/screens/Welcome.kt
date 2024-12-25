@@ -41,6 +41,7 @@ import au.com.redmonk.resources.learning
 import au.com.redmonk.resources.left_arrow
 import au.com.redmonk.resources.loom
 import au.com.redmonk.resources.right_arrow
+import isLandscape
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import utils.background
@@ -67,7 +68,7 @@ fun OnboardingScreen(onStartClick: () -> Unit) {
             when (currentPage) {
                 0 -> OnboardingPage(
                     title = "Welcome to Loom",
-                    description = "Weaving Independence,\n\tOne Skill at a Time.",
+                    description = "Weaving Independence,\n\n\tOne Skill at a Time.",
                     imageRes = Res.drawable.loom,
                     onNextClick = { currentPage++ }
                 )
@@ -164,6 +165,45 @@ fun OnboardingPage(
     imageRes: DrawableResource,
     onNextClick: () -> Unit,
 ) {
+    if (isLandscape()) {
+        Row(
+            modifier = Modifier
+                .fillMaxHeight(0.6f)
+                .fillMaxWidth()
+                .padding(16.dp)
+                .background(primary, shape = RoundedCornerShape(16.dp)),
+
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(imageRes),
+                contentDescription = title,
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .background(brush = gradient_background, shape = RoundedCornerShape(16.dp)),
+                contentScale = ContentScale.FillWidth,
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(0.6f)
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .background(primary, shape = RoundedCornerShape(16.dp)),
+
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = title, fontSize = 24.sp, color = Color.Black)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = description, fontSize = 16.sp, color = Color.Black)
+
+            }
+        }
+        return
+    }
     Column(
         modifier = Modifier
             .fillMaxHeight(0.6f)
