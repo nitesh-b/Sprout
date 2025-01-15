@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     //alias(libs.plugins.cocoapods)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 
 }
 
@@ -88,6 +89,10 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.multiplatform.settings.no.arg)
+            //TTS
+            // implementation(libs.tts)
+            //Extensions for Compose
+            implementation(libs.tts.compose)
         }
 
     }

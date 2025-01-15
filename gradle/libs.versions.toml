@@ -14,7 +14,7 @@ coil = "3.0.0-alpha07"
 compose-plugin = "1.6.10"
 junit = "4.13.2"
 kamelImage = "0.9.5"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 kotlinxDatetime = "0.6.0"
 kotlinxSerializationJson = "1.7.1"
 lifecycleViewmodelCompose = "2.8.0"
@@ -24,8 +24,10 @@ navigator-version = "2.7.0-alpha07"
 kotlin-serialization = "2.0.0"
 ktor = "3.0.0"
 coroutines = "1.9.0"
-compottie = "2.0.0-beta01"
+compottie = "2.0.0-beta02"
 plugin-serialization = "1.5.0"
+tts = "3.0.0-alpha.5"
+ksp = "2.0.21-1.0.28"
 
 [libraries]
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
@@ -58,6 +60,8 @@ compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "comp
 compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
 compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
 compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
+tts = { module = "nl.marc-apps:tts", version.ref = "tts" }
+tts-compose = { module = "nl.marc-apps:tts-compose", version.ref = "tts" }
 
 
 [plugins]
@@ -68,3 +72,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

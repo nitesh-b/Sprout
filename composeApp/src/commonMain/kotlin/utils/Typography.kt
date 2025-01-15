@@ -94,7 +94,7 @@ fun customTypoGraphy() = Typography().run {
         ),
         body2 = body2.copy(
             fontFamily = fontFamily,
-            fontSize = 18.sp,
+            fontSize = 20.sp,
             lineHeight = 20.sp,
             fontWeight = FontWeight.Medium
         ),
