@@ -14,7 +14,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import utils.primary
+import utils.baseColors
 import utils.tertiary
 
 @Composable
@@ -39,7 +39,7 @@ fun MultiCheckBoxList(
                     },
                     colors = CheckboxDefaults.colors(
                         checkedColor = tertiary,
-                        uncheckedColor = primary
+                        uncheckedColor = baseColors.primary
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))

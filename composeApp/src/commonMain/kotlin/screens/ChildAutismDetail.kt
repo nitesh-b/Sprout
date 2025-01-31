@@ -36,11 +36,9 @@ import components.Text
 import components.TextType
 import models.InterestItem
 import org.jetbrains.compose.resources.painterResource
-import utils.background
-import utils.primary
-import utils.secondary
+import utils.baseColors
+import utils.navBarColor
 import utils.tertiary
-import utils.warm_yellow
 import viewmodels.AuthViewModel
 
 @Composable
@@ -116,12 +114,12 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
 
     Column(
         modifier = Modifier.fillMaxSize()
-            .background(secondary)
+            .background(baseColors.secondary)
     ) {
 
         Box(
             modifier = Modifier.fillMaxWidth().height(200.dp)
-                .background(color = warm_yellow, RoundedCornerShape(0, 0, 100, 0))
+                .background(color = navBarColor, RoundedCornerShape(0, 0, 100, 0))
                 .padding(50.dp),
         ) {
             // Header Section
@@ -141,7 +139,7 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
 
             Column(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                    .background(color = secondary, shape = RoundedCornerShape(16.dp))
+                    .background(color = baseColors.secondary, shape = RoundedCornerShape(16.dp))
                     .padding(16.dp)
             ) {
                 Text(text = "Autism Spectrum Disorder level", preset = TextType.H4)
@@ -156,7 +154,7 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
             //Communication Level
             Column(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                    .background(color = secondary, shape = RoundedCornerShape(16.dp))
+                    .background(color = baseColors.secondary, shape = RoundedCornerShape(16.dp))
                     .padding(16.dp)
             ) {
                 Text(text = "Communication level:", preset = TextType.H4)
@@ -170,7 +168,7 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
             //Sensory sensitivities
             Column(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                    .background(color = background, shape = RoundedCornerShape(16.dp))
+                    .background(color = baseColors.background, shape = RoundedCornerShape(16.dp))
                     .padding(16.dp)
             ) {
                 Text(text = "Sensory sensitivities:", preset = TextType.H4)
@@ -186,7 +184,10 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
             //Sensory sensitivities
             Column(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                    .background(color = secondary, shape = RoundedCornerShape(16.dp))
+                    .background(
+                        color = baseColors.secondary,
+                        shape = RoundedCornerShape(16.dp)
+                    )
                     .padding(16.dp)
             ) {
 
@@ -204,7 +205,10 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
             //Common interests
             Column(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                    .background(color = secondary, shape = RoundedCornerShape(16.dp))
+                    .background(
+                        color = baseColors.secondary,
+                        shape = RoundedCornerShape(16.dp)
+                    )
                     .padding(16.dp)
             ) {
 
@@ -220,8 +224,8 @@ fun ChildAutismDetail(rootNavController: NavHostController, viewModel: AuthViewM
         ) {
             // "Next" Button
             Button(
-                onClick = { rootNavController.navigate(Routes.Home.route) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = primary),
+                onClick = { rootNavController.navigate(Routes.TabNav.route) },
+                colors = ButtonDefaults.buttonColors(backgroundColor = baseColors.primary),
                 shape = CircleShape,
                 modifier = Modifier.size(60.dp).align(Alignment.Center)
             ) {

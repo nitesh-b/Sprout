@@ -43,11 +43,13 @@ import io.github.aakira.napier.Napier
 import models.ResponseModel
 import models.SignUp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import utils.customTypoGraphy
 import viewmodels.AuthViewModel
 
 
 @Composable
+@Preview
 fun SignUp(
     rootNavController: NavHostController,
     authViewModel: AuthViewModel,

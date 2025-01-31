@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import utils.secondary
+import utils.baseColors
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -32,7 +32,7 @@ fun DropdownMenu(
     var isExpanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
-        modifier = Modifier.background(secondary, RoundedCornerShape(16.dp)),
+        modifier = Modifier.background(baseColors.secondary, RoundedCornerShape(16.dp)),
         expanded = isExpanded,
         onExpandedChange = { isExpanded = !isExpanded }
     ) {
@@ -45,7 +45,7 @@ fun DropdownMenu(
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
             },
-            modifier = Modifier.fillMaxWidth().padding(8.dp).background(secondary)
+            modifier = Modifier.fillMaxWidth().padding(8.dp).background(baseColors.secondary)
         )
 
         Spacer(modifier = Modifier.height(8.dp))

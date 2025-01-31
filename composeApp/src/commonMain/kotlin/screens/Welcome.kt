@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -44,11 +43,10 @@ import au.com.redmonk.resources.right_arrow
 import isLandscape
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import utils.background
-import utils.background_complimentary
+import utils.baseColors
 import utils.gradient_background
-import utils.primary
-import utils.secondary
+import utils.primaryButtonBackground
+import utils.secondaryButtonBackground
 import utils.tertiary
 
 @Composable
@@ -57,11 +55,11 @@ fun OnboardingScreen(onStartClick: () -> Unit) {
     var currentPage by remember { mutableIntStateOf(0) }
     val totalPages = 5
 
-    Surface(color = MaterialTheme.colors.primary) {
+    Surface {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(background),
+                .background(baseColors.background),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -118,7 +116,7 @@ fun OnboardingScreen(onStartClick: () -> Unit) {
                 if (currentPage > 0) {
                     Button(
                         onClick = { currentPage-- },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = background_complimentary),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = secondaryButtonBackground),
                         shape = CircleShape,
                         modifier = Modifier.size(60.dp)
                     ) {
@@ -133,7 +131,7 @@ fun OnboardingScreen(onStartClick: () -> Unit) {
                 if (currentPage < totalPages - 1) {
                     Button(
                         onClick = { currentPage++ },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = secondary),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = primaryButtonBackground),
                         shape = CircleShape,
                         modifier = Modifier.size(60.dp)
                     ) {
@@ -146,7 +144,7 @@ fun OnboardingScreen(onStartClick: () -> Unit) {
                 } else {
                     Button(
                         onClick = { onStartClick() },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = secondary),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = primaryButtonBackground),
                         shape = CircleShape,
                         modifier = Modifier.wrapContentWidth().height(60.dp)
                     ) {
@@ -171,7 +169,7 @@ fun OnboardingPage(
                 .fillMaxHeight(0.6f)
                 .fillMaxWidth()
                 .padding(16.dp)
-                .background(primary, shape = RoundedCornerShape(16.dp)),
+                .background(baseColors.primary, shape = RoundedCornerShape(16.dp)),
 
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
@@ -190,7 +188,7 @@ fun OnboardingPage(
                     .fillMaxHeight(0.6f)
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .background(primary, shape = RoundedCornerShape(16.dp)),
+                    .background(baseColors.primary, shape = RoundedCornerShape(16.dp)),
 
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -209,7 +207,7 @@ fun OnboardingPage(
             .fillMaxHeight(0.6f)
             .fillMaxWidth()
             .padding(16.dp)
-            .background(primary, shape = RoundedCornerShape(16.dp)),
+            .background(baseColors.primary, shape = RoundedCornerShape(16.dp)),
 
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -240,7 +238,7 @@ fun PageIndicator(currentPage: Int, totalPages: Int) {
 
         for (i in 0 until totalPages) {
             val color =
-                if (i == currentPage) tertiary else secondary
+                if (i == currentPage) tertiary else baseColors.secondary
             Box(
                 modifier = Modifier
                     .size(20.dp)

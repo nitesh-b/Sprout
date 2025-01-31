@@ -14,7 +14,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import utils.primary
+import utils.baseColors
 import utils.tertiary
 
 @Composable
@@ -35,7 +35,7 @@ fun RadioButtonGroup(
                     },
                     colors = RadioButtonDefaults.colors(
                         selectedColor = tertiary,
-                        unselectedColor = primary
+                        unselectedColor = baseColors.primary
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))

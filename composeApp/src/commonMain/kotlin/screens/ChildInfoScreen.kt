@@ -38,10 +38,9 @@ import au.com.redmonk.resources.Res
 import au.com.redmonk.resources.right_arrow
 import components.TextType
 import org.jetbrains.compose.resources.painterResource
-import utils.primary
-import utils.secondary
+import utils.baseColors
+import utils.navBarColor
 import utils.tertiary
-import utils.warm_yellow
 import viewmodels.AuthViewModel
 
 @Composable
@@ -59,12 +58,12 @@ fun ChildInfoScreen(rootNavController: NavHostController, viewModel: AuthViewMod
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(secondary),
+            .background(baseColors.secondary),
     ) {
 
         Box(
             modifier = Modifier.fillMaxWidth().height(200.dp)
-                .background(color = warm_yellow, RoundedCornerShape(0, 0, 100, 0))
+                .background(color = navBarColor, RoundedCornerShape(0, 0, 100, 0))
                 .padding(50.dp),
         ) {
             // Header Section
@@ -79,7 +78,7 @@ fun ChildInfoScreen(rootNavController: NavHostController, viewModel: AuthViewMod
             modifier = Modifier
                 .weight(1F)
                 .fillMaxSize()
-                .background(secondary)
+                .background(baseColors.secondary)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -177,7 +176,7 @@ fun ChildInfoScreen(rootNavController: NavHostController, viewModel: AuthViewMod
             // "Next" Button
             Button(
                 onClick = { rootNavController.navigate(Routes.ChildAutismDetail.route) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = primary),
+                colors = ButtonDefaults.buttonColors(backgroundColor = baseColors.primary),
                 shape = CircleShape,
                 modifier = Modifier.size(60.dp).align(Alignment.Center)
             ) {

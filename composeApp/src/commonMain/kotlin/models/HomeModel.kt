@@ -4,10 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeModel(
-    val fact: Fact,
-    val dictionary: WordOfDayModel,
-    val nationalDay: NationalDayModel? = null,
-    val discover: List<DiscoverModel>? = null,
+    val activities: List<Action>,
+    val mood: List<Mood>,
 )
 
 @Serializable

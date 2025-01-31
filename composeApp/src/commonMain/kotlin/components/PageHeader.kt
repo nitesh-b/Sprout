@@ -10,14 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import utils.warm_yellow
+import utils.navBarColor
 
 @Composable
 fun PageHeader(title: String, modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier.fillMaxWidth().height(80.dp)
-            .background(color = warm_yellow)
-            .padding(),
+        modifier = Modifier.fillMaxWidth().height(100.dp)
+            .background(color = navBarColor)
+            .padding(16.dp),
     ) {
         Text(
             text = title,

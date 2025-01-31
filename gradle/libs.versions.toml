@@ -14,7 +14,7 @@ coil = "3.0.0-alpha07"
 compose-plugin = "1.6.10"
 junit = "4.13.2"
 kamelImage = "0.9.5"
-kotlin = "2.0.20"
+kotlin = "2.1.10"
 kotlinxDatetime = "0.6.0"
 kotlinxSerializationJson = "1.7.1"
 lifecycleViewmodelCompose = "2.8.0"
@@ -27,7 +27,7 @@ coroutines = "1.9.0"
 compottie = "2.0.0-beta02"
 plugin-serialization = "1.5.0"
 tts = "3.0.0-alpha.5"
-ksp = "2.0.21-1.0.28"
+ksp = "2.1.10-1.0.29"
 
 [libraries]
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }

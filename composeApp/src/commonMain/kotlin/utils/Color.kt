@@ -10,13 +10,31 @@ val shadow_gray = Color(0xFF3E403E)
 val charcoal = Color(0xFF2F302F)
 val green = Color(0xFF00FF00)
 
-val primary = Color(0xFFA8D5BA) // soft green
-val secondary = Color(0xFFB2E4D5) // light teal
 val tertiary = Color(0xFFF4B7A1) // muted coral
-val warm_yellow = Color(0xFFfbde9d) //warm yellow
 val textColor = Color(0xFF2E3D49) // dark slate gray
-val background = Color(0xFFE0F2E9) // light gray
 val background_complimentary = Color(0xFFF2E0E9) // light pink
+
+val primary = Color(0xFFA1A69F) // Soft Sage
+val secondary = Color(0xFFBFCFBB) // Misty Green
+val primaryVariant = Color(0xFF8EA58C) // Classic Sage
+val secondaryVariant = Color(0xFF738A6E) // Moss Green
+val background = Color(0xFFF2F3F1) // Ivory (Neutral backdrop)
+val surface = Color(0xFFF2F3F1) // Same as background for consistency
+val error = Color(0xFFD8959B) // Mauve (Soft pink for subtle error indication)
+val onPrimary = Color(0xFF344C3D) // Evergreen (Dark contrast for text)
+val onSecondary = Color(0xFF344C3D) // Evergreen
+val onBackground = Color(0xFF344C3D) // Evergreen
+val onSurface = Color(0xFF344C3D) // Evergreen
+val onError = Color(0xFF344C3D) // Evergreen
+
+
+val navBarColor = primary //warm yellow
+val primaryButtonBackground = secondaryVariant
+val secondaryButtonBackground = secondary
+val primaryButtonTextColor = onPrimary
+val secondaryButtonTextColor = onSecondary
+val divider = secondary
+//val
 
 
 //gradents
@@ -30,15 +48,15 @@ val gradient_transparent = Brush.verticalGradient(listOf(Color.Transparent, Colo
 val baseColors = Colors(
     primary = primary,
     secondary = secondary,
-    primaryVariant = primary,
-    secondaryVariant = secondary,
+    primaryVariant = primaryVariant,
+    secondaryVariant = secondaryVariant,
     background = background,
-    surface = background,
-    error = tertiary,
-    onPrimary = textColor,
-    onSecondary = textColor,
-    onBackground = textColor,
-    onSurface = textColor,
-    onError = textColor,
+    surface = surface,
+    error = error,
+    onPrimary = onPrimary,
+    onSecondary = onSecondary,
+    onBackground = onBackground,
+    onSurface = onSurface,
+    onError = onError,
     isLight = true
 )

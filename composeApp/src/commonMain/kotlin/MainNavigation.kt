@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import screens.ChildAutismDetail
 import screens.ChildInfoScreen
 import screens.FunFactDetail
@@ -14,6 +15,7 @@ import utils.gradient_background
 import viewmodels.AuthViewModel
 
 @Composable
+@Preview
 fun MainNavigation() {
     val navController = rememberNavController()
     val authViewModel = viewModel { AuthViewModel() }

@@ -11,11 +11,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -26,7 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import components.Text
 import isAndroid
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import utils.gradient_background
+import viewmodels.HomeViewModel
 
 
 data class NavigationItem(val route: String, val label: String, val icon: ImageVector)
@@ -34,12 +36,18 @@ data class NavigationItem(val route: String, val label: String, val icon: ImageV
 @Composable
 @Preview
 fun TabNavigator(rootNavController: NavHostController) {
+
+    val homeViewModel = viewModel { HomeViewModel() }
+
     val tabNavController: NavHostController = rememberNavController()
     val bottomNavigationItems = listOf(
         NavigationItem(Routes.Home.route, "Home", Icons.Filled.Home),
         NavigationItem(Routes.Profile.route, "Profile", Icons.Filled.Settings)
     )
 
+    LaunchedEffect(Unit) {
+        homeViewModel.getHomeData()
+    }
     Scaffold(
 
         bottomBar = {
@@ -84,9 +92,9 @@ fun TabNavigator(rootNavController: NavHostController) {
         NavHost(
             navController = tabNavController,
             startDestination = Routes.Home.route,
-            Modifier.background(gradient_background).padding(innerPadding)
+            Modifier.padding(innerPadding)
         ) {
-            composable(Routes.Home.route) { Home(tabNavController) }
+            composable(Routes.Home.route) { Home(tabNavController, homeViewModel) }
             composable(Routes.Profile.route) { Profile(rootNavController, tabNavController) }
         }
     }

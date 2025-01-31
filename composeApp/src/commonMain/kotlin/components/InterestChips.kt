@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import models.InterestItem
-import utils.primary
+import utils.baseColors
 import utils.tertiary
 
 
@@ -74,7 +74,7 @@ fun ChipItem(item: InterestItem, onSelectionChanged: (InterestItem) -> Unit) {
         },
         colors = ChipDefaults.filterChipColors(
             selectedBackgroundColor = tertiary,
-            backgroundColor = primary
+            backgroundColor = baseColors.primary
         )
     ) {
         Text(text = item.value, preset = TextType.BODY1)

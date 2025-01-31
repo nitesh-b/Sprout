@@ -13,6 +13,7 @@ import au.com.redmonk.resources.OpenSans_Light
 import au.com.redmonk.resources.OpenSans_Regular
 import au.com.redmonk.resources.OpenSans_Semibold
 import au.com.redmonk.resources.Res
+import isTablet
 import org.jetbrains.compose.resources.Font
 
 
@@ -54,57 +55,115 @@ fun customFontFamily() = FontFamily(
 @Composable
 fun customTypoGraphy() = Typography().run {
     val fontFamily = customFontFamily()
-    copy(
-        h1 = h1.copy(
-            fontFamily = fontFamily,
-            fontSize = 36.sp,
-            lineHeight = 80.sp,
-            fontWeight = FontWeight.Bold
-        ),
-        h2 = h2.copy(
-            fontFamily = fontFamily,
-            fontSize = 28.sp,
-            lineHeight = 48.sp,
-            fontWeight = FontWeight.Bold
-        ),
-        h3 = h3.copy(
-            fontFamily = fontFamily,
-            fontSize = 24.sp,
-            lineHeight = 32.sp,
-            fontWeight = FontWeight.Bold
-        ),
-        h4 = h4.copy(fontFamily = fontFamily, fontSize = 20.sp, fontWeight = FontWeight.Bold),
-        h5 = h5.copy(fontFamily = fontFamily, fontSize = 18.sp, fontWeight = FontWeight.Bold),
-        h6 = h6.copy(fontFamily = fontFamily, fontSize = 16.sp, fontWeight = FontWeight.Bold),
-        subtitle1 = subtitle1.copy(
-            fontFamily = fontFamily,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
-        ),
-        subtitle2 = subtitle2.copy(
-            fontFamily = fontFamily,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold
-        ),
-        body1 = body1.copy(
-            fontFamily = fontFamily,
-            fontSize = 14.sp,
-            lineHeight = 16.sp,
-            fontWeight = FontWeight.Medium
-        ),
-        body2 = body2.copy(
-            fontFamily = fontFamily,
-            fontSize = 20.sp,
-            lineHeight = 20.sp,
-            fontWeight = FontWeight.Medium
-        ),
-        button = button.copy(fontFamily = fontFamily),
-        caption = caption.copy(
-            fontFamily = fontFamily,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Normal
-        ),
-        overline = overline.copy(fontFamily = fontFamily)
-    )
+    if (isTablet()) {
+
+        copy(
+            h1 = h1.copy(
+                fontFamily = fontFamily,
+                fontSize = 48.sp,
+                lineHeight = 100.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            h2 = h2.copy(
+                fontFamily = fontFamily,
+                fontSize = 42.sp,
+                lineHeight = 60.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            h3 = h3.copy(
+                fontFamily = fontFamily,
+                fontSize = 36.sp,
+                lineHeight = 42.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            h4 = h4.copy(fontFamily = fontFamily, fontSize = 32.sp, fontWeight = FontWeight.Bold),
+            h5 = h5.copy(fontFamily = fontFamily, fontSize = 24.sp, fontWeight = FontWeight.Bold),
+            h6 = h6.copy(fontFamily = fontFamily, fontSize = 20.sp, fontWeight = FontWeight.Bold),
+            subtitle1 = subtitle1.copy(
+                fontFamily = fontFamily,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            subtitle2 = subtitle2.copy(
+                fontFamily = fontFamily,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            body1 = body1.copy(
+                fontFamily = fontFamily,
+                fontSize = 16.sp,
+                lineHeight = 18.sp,
+                fontWeight = FontWeight.Medium
+            ),
+            body2 = body2.copy(
+                fontFamily = fontFamily,
+                fontSize = 24.sp,
+                lineHeight = 28.sp,
+                fontWeight = FontWeight.Medium
+            ),
+            button = button.copy(fontFamily = fontFamily),
+            caption = caption.copy(
+                fontFamily = fontFamily,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal
+            ),
+            overline = overline.copy(fontFamily = fontFamily)
+        )
+    } else {
+        copy(
+            h1 = h1.copy(
+                fontFamily = fontFamily,
+                fontSize = 36.sp,
+                lineHeight = 80.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            h2 = h2.copy(
+                fontFamily = fontFamily,
+                fontSize = 28.sp,
+                lineHeight = 48.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            h3 = h3.copy(
+                fontFamily = fontFamily,
+                fontSize = 24.sp,
+                lineHeight = 32.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            h4 = h4.copy(fontFamily = fontFamily, fontSize = 20.sp, fontWeight = FontWeight.Bold),
+            h5 = h5.copy(fontFamily = fontFamily, fontSize = 18.sp, fontWeight = FontWeight.Bold),
+            h6 = h6.copy(fontFamily = fontFamily, fontSize = 16.sp, fontWeight = FontWeight.Bold),
+            subtitle1 = subtitle1.copy(
+                fontFamily = fontFamily,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            subtitle2 = subtitle2.copy(
+                fontFamily = fontFamily,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            body1 = body1.copy(
+                fontFamily = fontFamily,
+                fontSize = 14.sp,
+                lineHeight = 16.sp,
+                fontWeight = FontWeight.Medium
+            ),
+            body2 = body2.copy(
+                fontFamily = fontFamily,
+                fontSize = 20.sp,
+                lineHeight = 20.sp,
+                fontWeight = FontWeight.Medium
+            ),
+            button = button.copy(fontFamily = fontFamily),
+            caption = caption.copy(
+                fontFamily = fontFamily,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal
+            ),
+            overline = overline.copy(fontFamily = fontFamily)
+        )
+    }
 }
+

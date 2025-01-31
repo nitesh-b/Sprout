@@ -1,5 +1,6 @@
 package screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,16 +15,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,82 +38,47 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import au.com.redmonk.resources.Res
-import au.com.redmonk.resources.climb
-import au.com.redmonk.resources.dance
-import au.com.redmonk.resources.drink
-import au.com.redmonk.resources.excercise
-import au.com.redmonk.resources.go_out
-import au.com.redmonk.resources.jump
-import au.com.redmonk.resources.listen
-import au.com.redmonk.resources.paint
-import au.com.redmonk.resources.play
-import au.com.redmonk.resources.point
-import au.com.redmonk.resources.read
-import au.com.redmonk.resources.run
-import au.com.redmonk.resources.share
-import au.com.redmonk.resources.sing
-import au.com.redmonk.resources.sort
-import au.com.redmonk.resources.touch
-import au.com.redmonk.resources.watch
+import au.com.redmonk.resources.vector_bubble
+import components.ActionTile
+import components.Carousel
+import components.Divider
 import components.PageHeader
 import components.RecentCard
 import components.Text
 import components.TextType
+import io.github.aakira.napier.Napier
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
-import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import isLandscape
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import models.Action
+import models.HomeModel
+import models.Mood
+import models.ResponseModel
 import nl.marc_apps.tts.TextToSpeechInstance
 import nl.marc_apps.tts.rememberTextToSpeechOrNull
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import utils.background
+import org.jetbrains.compose.resources.vectorResource
+import utils.baseColors
+import utils.navBarColor
+import viewmodels.HomeViewModel
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun Home(tabNavController: NavHostController) {
+fun Home(tabNavController: NavHostController, homeViewModel: HomeViewModel) {
     val TAG = "Home"
-    val listItems =
-        mapOf<String, DrawableResource>(
-            "Play" to Res.drawable.play,
-            "Exercise" to Res.drawable.excercise,
-            "Climb" to Res.drawable.climb,
-            "Dance" to Res.drawable.dance,
-            "Drink" to Res.drawable.drink,
-            "Read" to Res.drawable.read,
-            "Go out" to Res.drawable.go_out,
-            "Jump" to Res.drawable.jump,
-            "Listen" to Res.drawable.listen,
-            "Paint" to Res.drawable.paint,
-            "Point" to Res.drawable.point,
-            "Run" to Res.drawable.run,
-            "Share" to Res.drawable.share,
-            "Sing" to Res.drawable.sing,
-            "Sort" to Res.drawable.sort,
-            "Touch" to Res.drawable.touch,
-            "Watch" to Res.drawable.watch,
 
-            )
-
-    val recentListItems = remember {
-        mutableStateMapOf<String, DrawableResource>(
-            "Play" to Res.drawable.play,
-            "Exercise" to Res.drawable.excercise,
-            "Climb" to Res.drawable.climb,
-        )
-    }
-    val columnCount = if (isLandscape()) 8 else 5
+    val columnCount = if (isLandscape()) 8 else 4
 
     val ttsCoroutineScope = rememberCoroutineScope()
     val tts = rememberTextToSpeechOrNull()
-    var spokenWord by remember { mutableStateOf("I want to ") }
+    var spokenWord by remember { mutableStateOf("") }
 
     val speakComposition by rememberLottieComposition {
         LottieCompositionSpec.JsonString(
@@ -118,97 +90,169 @@ fun Home(tabNavController: NavHostController) {
     var showPopup by remember { mutableStateOf(false) }  // state to control popup visibility
     var selectedItem by remember { mutableStateOf<String?>(null) }  // store the selected item
 
+    var actionState by remember { mutableStateOf<List<Action>>(listOf()) }
+    val recentActivities = remember { mutableStateListOf<Action>() }
+    var moods by remember { mutableStateOf<List<Mood>>(listOf()) }
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // Header item
-            item {
-                PageHeader(title = "Hello!")
+    val homeDataState by homeViewModel.data.collectAsState()
+
+    LaunchedEffect(homeDataState) {
+
+        when (homeDataState) {
+            is ResponseModel.Error -> {
+                Napier.d(tag = TAG, message = "Failed to Load Home data")
             }
 
-            // Row with Yes no buttons
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth().height(250.dp).padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                        Alignment.CenterHorizontally
-                    )
-                ) {
+            ResponseModel.Loading -> Napier.d(tag = TAG, message = "Loading")
 
-                    Box(
-                        modifier = Modifier.background(background, RoundedCornerShape(20.dp))
-                            .weight(1f)
+            ResponseModel.Ready -> {}
+            is ResponseModel.Success -> {
+                (homeDataState as ResponseModel.Success<HomeModel>).data?.let { homeData ->
+                    actionState = homeData.activities
+                    moods = homeData.mood
+                }
+            }
+        }
+    }
+
+
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+
+            PageHeader(title = "Hello!")
+
+            Row(
+                modifier = Modifier.fillMaxWidth().height(250.dp)
+                    .background(navBarColor),
+
+                horizontalArrangement = Arrangement.Center
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .weight(0.6f)
+                        .background(
+                            MaterialTheme.colors.surface,
+                            shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        )
+                        .padding(16.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp).fillMaxWidth().fillMaxHeight(),
-                            verticalAlignment = Alignment.CenterVertically
+//                            Image(
+//                                modifier = Modifier.wrapContentWidth().fillMaxHeight()
+//                                    .clickable(enabled = true, onClick = {
+//                                        if (tts != null) textToSpeech(
+//                                            spokenWord,
+//                                            ttsCoroutineScope,
+//                                            tts
+//                                        ) {
+//                                            spokenWord = "I want to "
+//                                        }
+//
+//                                    }),
+//                                painter = rememberLottiePainter(
+//                                    speakComposition,
+//                                    progress = { progress }
+//                                ),
+//                                contentDescription = "Speak"
+//                            )
+
+                        Box(
+                            modifier = Modifier.weight(1f)
+
                         ) {
                             Image(
-                                modifier = Modifier.wrapContentWidth().fillMaxHeight()
-                                    .clickable(enabled = true, onClick = {
-                                        if (tts != null) textToSpeech(
-                                            spokenWord,
-                                            ttsCoroutineScope,
-                                            tts
-                                        ) {
-                                            spokenWord = "I want to "
-                                        }
-
-                                    }),
-                                painter = rememberLottiePainter(
-                                    speakComposition,
-                                    progress = { progress }
-                                ),
-                                contentDescription = "Speak"
+                                modifier = Modifier
+                                    .align(Alignment.TopStart),
+                                imageVector = vectorResource(Res.drawable.vector_bubble),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillBounds
                             )
                             Text(
                                 text = spokenWord,
-                                preset = TextType.H1,
+                                preset = TextType.H3,
                                 modifier = Modifier
-                                    .padding(horizontal = 20.dp).weight(1f).fillMaxHeight()
+                                    .padding(40.dp)
+                                    .align(Alignment.TopStart)
+                                    .fillMaxWidth(if (isLandscape()) 0.84f else 0.9f)
+                                    .fillMaxHeight()
                             )
 
                         }
+
+
                     }
-
-                    Column {
-                        Text(
-                            text = "Recent",
-                            preset = TextType.H4,
-                            modifier = Modifier.wrapContentSize()
-                        )
-                        LazyColumn(
-                            modifier = Modifier.wrapContentWidth().fillMaxHeight(),
-                            verticalArrangement = Arrangement.spacedBy(
-                                16.dp,
-                                Alignment.CenterVertically
-                            )
-                        ) {
-                            items(recentListItems.entries.toMutableList()) { item ->
-                                RecentCard(image = item.value, title = item.key)
-                            }
-
-                        }
-                    }
-
                 }
+
+                Column(
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .padding(16.dp)
+                        .background(
+                            navBarColor,
+                            shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+                        ),
+
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Recent",
+                        preset = TextType.H5,
+                        modifier = Modifier.wrapContentSize().align(Alignment.Start)
+                    )
+                    VerticalPager(
+                        pageCount = { recentActivities.size },
+                        modifier = Modifier.fillMaxWidth().weight(1f)
+                    ) {
+
+                    }
+                    LazyColumn(
+                        modifier = Modifier.wrapContentWidth().fillMaxHeight(),
+                        verticalArrangement = Arrangement.spacedBy(
+                            16.dp,
+                            Alignment.CenterVertically
+                        )
+                    ) {
+                        items(recentActivities) { item ->
+                            RecentCard(image = item.localImage, title = item.title)
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        Divider(height = 2.dp, vertical = 8.dp)
+
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            stickyHeader {
+                Column(
+                    modifier = Modifier.fillMaxWidth().wrapContentHeight()
+                ) {
+                    Text(
+                        text = "Activities",
+                        preset = TextType.H3,
+                        modifier = Modifier.wrapContentSize().padding(horizontal = 16.dp)
+                    )
+                }
+
+
             }
 
-
-            item {
-
-                Text(
-                    text = "Popular",
-                    preset = TextType.H2,
-                    modifier = Modifier.wrapContentSize().padding(horizontal = 16.dp)
-                )
-            }
-            items(listItems.entries.chunked(columnCount)) { rowItems ->
+            items(actionState.chunked(columnCount)) { rowItems ->
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -216,34 +260,25 @@ fun Home(tabNavController: NavHostController) {
                     rowItems.forEach { item ->
                         Button(
                             onClick = {
-                                spokenWord += item.key.lowercase().plus(" ")
-                                selectedItem = item.key // Store the selected item
+                                spokenWord += item.title.lowercase().plus(" ")
+                                // selectedItem = item.key // Store the selected item
                                 showPopup = false  // Trigger showing the popup
-                                recentListItems[item.key] = item.value
+                                if (recentActivities.contains(item)) {
+                                    recentActivities.remove(item)
+                                }
+                                recentActivities.add(item)
                             },
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
                                 .padding(2.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.primaryVariant
+                            ),
+                            shape = RoundedCornerShape(12.dp)
 
-                            ) {
-                            Column(
-                                modifier = Modifier.fillMaxSize().padding(4.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Image(
-                                    painterResource(item.value),
-                                    contentDescription = item.toString(),
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Text(
-                                    text = item.key,
-                                    preset = TextType.H4,
-                                    modifier = Modifier.wrapContentSize()
-                                )
-                            }
-
+                        ) {
+                            ActionTile(item)
 
                         }
                     }
@@ -251,6 +286,28 @@ fun Home(tabNavController: NavHostController) {
                     repeat(columnCount - rowItems.size) {
                         Spacer(modifier = Modifier.weight(1f))
                     }
+                }
+            }
+
+
+            item {
+                Box(
+                    modifier = Modifier.fillMaxWidth().wrapContentHeight()
+                        .background(color = baseColors.background)
+                ) {
+
+                    Carousel(
+                        modifier = Modifier.fillMaxWidth().wrapContentHeight()
+                            .align(Alignment.BottomEnd),
+                        carouselContents = moods
+                    )
+                    Text(
+                        text = "How are you feeling Today?",
+                        color = Color.White,
+                        preset = TextType.H1,
+                        modifier = Modifier.fillMaxWidth(0.5f).padding(horizontal = 16.dp)
+                            .align(Alignment.CenterStart)
+                    )
                 }
             }
 
